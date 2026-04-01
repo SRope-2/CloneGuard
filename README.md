@@ -72,7 +72,7 @@ python train.py --data_dir /path/to/your/dataset
 This code is built upon the following repositories:
 
 * [RAE](https://github.com/bytetriper/RAE/tree/main)
-* [WF-VAE](https://github.com/PKU-YuanGroup/WF-VAE.git))
+* [WF-VAE](https://github.com/PKU-YuanGroup/WF-VAE.git)
 ## Citation
 
 If you find this code useful in your research, please cite our paper accepted by **ICME 2026**:
