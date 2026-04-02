@@ -1,0 +1,50 @@
+stage_1:
+  target: my_rae.src.stage1.rae.RAE
+  params:
+    encoder_cls: 'Dinov2withNorm'
+    encoder_config_path: 'dinov2-with-registers-base' # 请确保运行目录下有此预训练权重
+    encoder_input_size: 224
+    encoder_params:
+      dinov2_path: 'dinov2-with-registers-base'
+      normalize: true
+    
+    decoder_config:
+      target: models.decoder.RAE_WF_Decoder 
+      params:
+        rae_latent_dim: 768
+        wf_vae_latent_dim: 16
+        target_size: 256
+        decoder_body_config:
+          latent_dim: 16
+          num_resblocks: 3
+          dropout: 0.0
+          energy_flow_size: 128
+          norm_type: "layernorm"
+          base_channels: [128, 256, 512, 512]
+          up_layer_type: ["hw", "hw", "hw"]
+    
+    noise_tau: 0.8
+    reshape_to_2d: true
+
+training:
+  epochs: 16
+  ema_decay: 0.9978
+  batch_size: 16
+  num_workers: 4
+  clip_grad: 1.0
+  log_interval: 50
+  checkpoint_interval: 2000
+  sample_interval: 0
+  global_seed: 42
+  
+  optimizer:
+    lr: 2.1e-4
+    betas: [0.5, 0.9]
+    weight_decay: 0.0
+  
+  scheduler:
+    type: cosine
+    warmup_epochs: 1
+    decay_end_epoch: 16
+    base_lr: 2.1e-4
+    final_lr: 2.1e-5
