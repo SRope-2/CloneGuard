@@ -57,13 +57,29 @@ python inference.py \
     --wm_ckpt ./checkpoints/wm.pt \
     --output_dir ./results/
 ```
-### 3. Training Pipeline 
-For researchers aiming to understand or reproduce the training phase on custom datasets, we provide the core training script entry:
+### 3. Progressive Training Pipeline
+
+Our training framework consists of two progressive stages. We leverage the excellent [RAE](https://github.com/bytetriper/RAE) framework for the base reconstruction phase.
+
+#### Stage 1: Base Wavelet-Flow VAE Training (Watermark-Free)
+In this stage, we train the base decoder to reconstruct the host images from the frozen DINOv2 latent space, successfully eliminating the grid artifacts. 
+You can directly use the RAE training script with our custom decoder configuration:
+
 ```bash
-python train.py --data_dir /path/to/your/dataset
+# Ensure the RAE repository is in your PYTHONPATH
+python -m my_rae.src.train_stage1 \
+    --config ./configs/train_rae_with_wf_decoder.yaml \
+    --data_dir /path/to/your/dataset
 ```
+#### Stage 2: Parallel Stream Weight Cloning (Watermark Injection)
+Once the base decoder is trained (or using our provided wf_rae.pt), you can train the watermark cloning stream and the robust extractor:
 
-
+```bash
+python train.py \
+    --data_dir /path/to/your/dataset \
+    --vae_ckpt ./checkpoints/wf_rae.pt \
+    --output_dir ./checkpoints/stage2_outputs
+```
 
 
 
