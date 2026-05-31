@@ -26,7 +26,7 @@ To run the inference pipeline, you need both the base Wavelet-Flow VAE weights (
 | Model Component | Checkpoint Type | Download Link |
 | :--- | :---: | :--- |
 | **Stage 1**: WF-VAE Decoder | Base Autoencoder | [wf_rae.pt](https://drive.google.com/file/d/1LOEq2U7h2DJGmIANFMndw7DTSPtSb6a2/view?usp=drive_link) |
-| **Stage 2**: CloneGuard (GenPTW) | Watermark Network | [wm.pt](https://drive.google.com/file/d/1M74H2cHpE4e9HK28eEZavvkJZ3h-rSQo/view?usp=drive_link) |
+| **Stage 2**: CloneGuard| Watermark Network | [wm.pt](https://drive.google.com/file/d/1M74H2cHpE4e9HK28eEZavvkJZ3h-rSQo/view?usp=drive_link) |
 
 *Please download both weights and place them in the `checkpoints/` directory.*
 
